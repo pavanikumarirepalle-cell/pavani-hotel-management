@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173b35">
+  <title>Pavani Hotel | Room Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#"><span class="brand-mark">P</span><span>PAVANI <small>HOTEL & SUITES</small></span></a>
+    <nav id="mainNav">
+      <a href="#home">Home</a><a href="#rooms">Rooms</a>
+      <a href="#my-bookings" class="customer-only hidden">My bookings</a>
+      <a href="#admin" class="admin-only hidden">Admin</a>
+    </nav>
+    <div class="header-actions">
+      <span id="userLabel" class="user-label"></span>
+      <button id="loginOpen" class="btn btn-outline">Login</button>
+      <button id="registerOpen" class="btn btn-primary">Sign up</button>
+      <button id="logoutBtn" class="btn btn-outline hidden">Logout</button>
+      <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="eyebrow">A STAY TO REMEMBER</span>
+        <h1>Make room for<br><em>something wonderful.</em></h1>
+        <p>Thoughtful comfort, warm hospitality and a place to feel at home.</p>
+        <a class="btn btn-light" href="#rooms">Explore our rooms <span>↗</span></a>
+      </div>
+      <div class="hero-note"><span>✦</span> YOUR COMFORT, OUR PROMISE</div>
+    </section>
+
+    <section class="search-panel section-wrap" id="rooms">
+      <div class="section-heading">
+        <div><span class="eyebrow">FIND YOUR STAY</span><h2>Discover your room</h2></div>
+        <p>Choose your dates to see rooms available for your stay.</p>
+      </div>
+      <form id="searchForm" class="search-form">
+        <label>CHECK-IN<input type="date" id="checkIn" required></label>
+        <label>CHECK-OUT<input type="date" id="checkOut" required></label>
+        <label>GUESTS<select id="capacity"><option value="">Any guests</option><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option><option value="5">5+ guests</option></select></label>
+        <button class="btn btn-primary" type="submit">Search rooms</button>
+      </form>
+      <div id="roomMessage" class="notice" aria-live="polite"></div>
+      <div id="roomsGrid" class="rooms-grid"></div>
+    </section>
+
+    <section class="feature-band">
+      <div><span>01</span><h3>Comfort first</h3><p>Relax in thoughtfully prepared rooms designed around your stay.</p></div>
+      <div><span>02</span><h3>Easy booking</h3><p>Check availability and manage your reservation in a few simple steps.</p></div>
+      <div><span>03</span><h3>Warm hospitality</h3><p>Our focus is making every visit feel welcoming and effortless.</p></div>
+    </section>
+
+    <section class="section-wrap bookings-section hidden" id="my-bookings">
+      <div class="section-heading"><div><span class="eyebrow">YOUR JOURNEY</span><h2>My bookings</h2></div><button id="profileOpen" class="btn btn-outline">Edit profile</button></div>
+      <div id="myBookingsList"></div>
+    </section>
+
+    <section class="section-wrap admin-section hidden" id="admin">
+      <div class="section-heading"><div><span class="eyebrow">CONTROL CENTRE</span><h2>Admin dashboard</h2></div><span class="admin-tag">ADMIN ACCESS</span></div>
+      <div id="adminStats" class="stats-grid"></div>
+      <div class="admin-tabs">
+        <button class="tab active" data-tab="rooms">Rooms</button>
+        <button class="tab" data-tab="bookings">Bookings</button>
+        <button class="tab" data-tab="customers">Customers</button>
+      </div>
+      <div class="admin-toolbar"><h3 id="adminTableTitle">Room management</h3><button id="addRecordBtn" class="btn btn-primary">+ Add room</button></div>
+      <div id="adminTable" class="table-wrap"></div>
+    </section>
+  </main>
+
+  <footer><a class="brand footer-brand" href="#"><span class="brand-mark">P</span><span>PAVANI <small>HOTEL & SUITES</small></span></a><p>Made for memorable stays. © <span id="year"></span> Pavani Hotel.</p></footer>
+
+  <div class="modal hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-card">
+      <button class="modal-close" data-close aria-label="Close">×</button>
+      <span class="eyebrow">WELCOME TO PAVANI</span><h2 id="authTitle">Sign in</h2>
+      <div class="auth-switch"><button class="active" data-auth="login">Login</button><button data-auth="register">Create account</button><button data-auth="admin">Admin</button></div>
+      <form id="authForm" class="stack-form">
+        <div id="nameField" class="hidden"><label>Full name<input name="name" minlength="2" maxlength="100"></label></div>
+        <div id="phoneField" class="hidden"><label>Phone number<input name="phone" type="tel"></label></div>
+        <label>Email address<input name="email" type="email" required autocomplete="email"></label>
+        <label>Password<input name="password" type="password" required minlength="8" autocomplete="current-password"></label>
+        <button class="btn btn-primary full-btn" type="submit">Continue</button>
+      </form>
+      <p id="authMessage" class="notice" aria-live="polite"></p>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="profileModal" role="dialog" aria-modal="true">
+    <div class="modal-card"><button class="modal-close" data-close>×</button><span class="eyebrow">YOUR ACCOUNT</span><h2>Edit profile</h2>
+      <form id="profileForm" class="stack-form">
+        <label>Full name<input name="name" required minlength="2"></label>
+        <label>Email<input name="email" type="email" required></label>
+        <label>Phone<input name="phone" type="tel" required></label>
+        <label>New password <small>(leave blank to keep current)</small><input name="password" type="password" minlength="8"></label>
+        <button class="btn btn-primary full-btn">Save changes</button>
+      </form><p id="profileMessage" class="notice"></p>
+    </div>
+  </div>
+
+  <div class="modal hidden" id="recordModal" role="dialog" aria-modal="true">
+    <div class="modal-card"><button class="modal-close" data-close>×</button><span class="eyebrow">ADMINISTRATION</span><h2 id="recordTitle">Add room</h2>
+      <form id="recordForm" class="stack-form"></form><p id="recordMessage" class="notice"></p>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/js/app.js"></script>
+</body>
+</html>
